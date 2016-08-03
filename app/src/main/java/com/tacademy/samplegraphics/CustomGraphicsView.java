@@ -34,11 +34,19 @@ public class CustomGraphicsView extends View {
 
     Bitmap mBitmap;
     Matrix matrix;
+    float[] meshVertices;
 
     private void initBitmap() {
         mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sample_0);
         matrix = new Matrix();
         matrix.reset();
+
+        float dx = mBitmap.getWidth() / 4.0f;
+        float height = mBitmap.getHeight();
+        meshVertices = new float[] {
+                0, 0,  dx , 50,  dx * 2 , 0 ,  dx * 3 , 50 , dx * 4 , 0,
+                0, height, dx, height - 50, dx * 2, height, dx * 3, height - 50, dx * 4, height
+        };
     }
 
     Path path, textPath;
@@ -85,9 +93,14 @@ public class CustomGraphicsView extends View {
         //drawCircle(canvas);
         //drawPath(canvas);
         //drawText(canvas);
-        drawBitmap(canvas);
+        //drawBitmap(canvas);
+        drawBitmapMesh(canvas);
 
         canvas.restore();
+    }
+
+    private void drawBitmapMesh(Canvas canvas) {
+        canvas.drawBitmapMesh(mBitmap, 4, 1, meshVertices, 0, null, 0, mPaint);
     }
 
     private void drawBitmap(Canvas canvas) {
