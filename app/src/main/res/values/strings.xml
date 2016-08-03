@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SampleGraphics</string>
+    <string name="title_custom_activity">CUSTOM ACTIVITY</string>
 </resources>
