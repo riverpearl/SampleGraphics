@@ -5,7 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.DashPathEffect;
+import android.graphics.LightingColorFilter;
 import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -112,9 +116,35 @@ public class CustomGraphicsView extends View {
         //drawPathEffect(canvas);
         //drawPathDashPathEffect(canvas);
         //drawColor(canvas);
-        drawShader(canvas);
+        //drawShader(canvas);
+        drawColorFilter(canvas);
 
         canvas.restore();
+    }
+
+    private void drawColorFilter(Canvas canvas) {
+        mPaint.setColorFilter(null);
+        canvas.drawBitmap(mBitmap, 0, 0, mPaint);
+
+        ColorFilter filter = new LightingColorFilter(0x808080, 0x303030);
+        mPaint.setColorFilter(filter);
+        canvas.drawBitmap(mBitmap, mBitmap.getWidth() + 50, 0, mPaint);
+
+        float[] src = {
+                -1, 0, 0, 0, 255,
+                0, -1, 0, 0, 255,
+                0, 0, -1, 0, 255,
+                0, 0, 0, 1, 0
+        };
+        ColorMatrix cm = new ColorMatrix(src);
+        filter = new ColorMatrixColorFilter(cm);
+        mPaint.setColorFilter(filter);
+        canvas.drawBitmap(mBitmap, 0, mBitmap.getHeight() + 50, mPaint);
+
+        cm.setSaturation(0);
+        filter = new ColorMatrixColorFilter(cm);
+        mPaint.setColorFilter(filter);
+        canvas.drawBitmap(mBitmap, mBitmap.getWidth() + 50, mBitmap.getHeight() + 50, mPaint);
     }
 
     private void drawShader(Canvas canvas) {
