@@ -67,7 +67,16 @@ public class CustomGraphicsView extends View {
         //drawLineAndPoint(canvas);
         //drawRect(canvas);
         //drawCircle(canvas);
-        drawPath(canvas);
+        //drawPath(canvas);
+        drawText(canvas);
+    }
+
+    String text = "Hello Android!";
+
+    private void drawText(Canvas canvas) {
+        mPaint.setColor(Color.BLUE);
+        mPaint.setTextSize(30);
+        canvas.drawText(text, 0, 30, mPaint);
     }
 
     private void drawPath(Canvas canvas) {
