@@ -6,11 +6,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.LinearGradient;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathDashPathEffect;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
+import android.graphics.Shader;
+import android.graphics.SweepGradient;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -106,9 +110,38 @@ public class CustomGraphicsView extends View {
         //drawBitmap(canvas);
         //drawBitmapMesh(canvas);
         //drawPathEffect(canvas);
-        drawPathDashPathEffect(canvas);
+        //drawPathDashPathEffect(canvas);
+        //drawColor(canvas);
+        drawShader(canvas);
 
         canvas.restore();
+    }
+
+    private void drawShader(Canvas canvas) {
+        int[] colors = { Color.RED, Color.GREEN, Color.BLUE };
+        float[] positions = { 0, 0.3f, 1 };
+
+        Shader shader = new LinearGradient(200, 200, 400, 400, colors, positions, Shader.TileMode.MIRROR);
+        mPaint.setShader(shader);
+        canvas.drawRect(100, 100, 400, 400, mPaint);
+
+        shader = new RadialGradient(200, 600, 100, Color.RED, Color.BLUE, Shader.TileMode.CLAMP);
+        mPaint.setShader(shader);
+        canvas.drawCircle(200, 600, 100, mPaint);
+
+        colors = new int[] { Color.RED, Color.GREEN, Color.BLUE, Color.RED };
+        shader = new SweepGradient(500, 600, colors, null);
+        mPaint.setShader(shader);
+        canvas.drawCircle(500, 600, 100, mPaint);
+    }
+
+    private void drawColor(Canvas canvas) {
+        int color = Color.argb(0x80, 0xff, 0xea, 0x1b);
+        mPaint.setColor(color);
+        canvas.drawRect(100, 100, 300, 300, mPaint);
+
+        mPaint.setAlpha(0x80);
+        canvas.drawBitmap(mBitmap, 200, 200, mPaint);
     }
 
     private void drawPathDashPathEffect(Canvas canvas) {
