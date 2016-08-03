@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SampleGraphics</string>
     <string name="title_custom_activity">CUSTOM ACTIVITY</string>
+    <string name="title_change">CHANGE</string>
 </resources>

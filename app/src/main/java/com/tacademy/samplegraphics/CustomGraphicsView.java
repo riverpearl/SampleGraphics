@@ -1,6 +1,7 @@
 package com.tacademy.samplegraphics;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -19,6 +20,8 @@ import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,10 +39,26 @@ public class CustomGraphicsView extends View {
 
     public CustomGraphicsView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CustomView, R.attr.customViewStyle, 0);
+            Drawable d = ta.getDrawable(R.styleable.CustomView_image);
+            if (d != null && d instanceof BitmapDrawable) {
+                mBitmap = ((BitmapDrawable) d).getBitmap();
+            }
+            ta.recycle();
+        }
+
         mPaint = new Paint();
         initPoint();
         initPath();
         initBitmap();
+    }
+
+    public void changeBitmap(Bitmap bitmap) {
+        mBitmap = bitmap;
+        requestLayout();
+        invalidate();
     }
 
     Bitmap mBitmap;
@@ -117,9 +136,14 @@ public class CustomGraphicsView extends View {
         //drawPathDashPathEffect(canvas);
         //drawColor(canvas);
         //drawShader(canvas);
-        drawColorFilter(canvas);
+        //drawColorFilter(canvas);
+        drawSimpleBitmap(canvas);
 
         canvas.restore();
+    }
+
+    private void drawSimpleBitmap(Canvas canvas) {
+        canvas.drawBitmap(mBitmap, matrix, mPaint);
     }
 
     private void drawColorFilter(Canvas canvas) {
@@ -261,6 +285,27 @@ public class CustomGraphicsView extends View {
         canvas.drawPoints(points, mPaint);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int width = getPaddingLeft() + getPaddingRight() + mBitmap.getWidth();
+        int height = getPaddingTop() + getPaddingBottom() + mBitmap.getHeight();
+
+        width = resolveSize(width, widthMeasureSpec);
+        height = resolveSize(height, heightMeasureSpec);
+
+        setMeasuredDimension(width, height);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
+        int x = 0, y = 0;
+
+        x = getPaddingLeft() + ((right - left) - (getPaddingLeft() + getPaddingRight()) - mBitmap.getWidth()) / 2;
+        y = getPaddingTop() + ((bottom - top) - (getPaddingTop() + getPaddingBottom()) - mBitmap.getHeight()) / 2;
+        matrix.setTranslate(x, y);
+    }
 
     float x = 0, y = 0;
 
