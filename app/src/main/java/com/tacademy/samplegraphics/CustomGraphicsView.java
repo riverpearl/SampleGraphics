@@ -1,8 +1,11 @@
 package com.tacademy.samplegraphics;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -26,6 +29,16 @@ public class CustomGraphicsView extends View {
         mPaint = new Paint();
         initPoint();
         initPath();
+        initBitmap();
+    }
+
+    Bitmap mBitmap;
+    Matrix matrix;
+
+    private void initBitmap() {
+        mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sample_0);
+        matrix = new Matrix();
+        matrix.reset();
     }
 
     Path path, textPath;
@@ -71,9 +84,21 @@ public class CustomGraphicsView extends View {
         //drawRect(canvas);
         //drawCircle(canvas);
         //drawPath(canvas);
-        drawText(canvas);
+        //drawText(canvas);
+        drawBitmap(canvas);
 
         canvas.restore();
+    }
+
+    private void drawBitmap(Canvas canvas) {
+        matrix.setTranslate(100, 100);
+        matrix.postRotate(45, 100, 100);
+        canvas.drawBitmap(mBitmap, 0, 0, mPaint);
+
+        matrix.setScale(1, -1, mBitmap.getWidth() / 2, mBitmap.getHeight() / 2);
+        matrix.postSkew(1, 0);
+        matrix.postTranslate(0, mBitmap.getHeight());
+        canvas.drawBitmap(mBitmap, matrix, mPaint);
     }
 
     String text = "Hello Android!";
