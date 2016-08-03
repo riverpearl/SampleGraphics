@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PathDashPathEffect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -49,7 +51,8 @@ public class CustomGraphicsView extends View {
         };
     }
 
-    Path path, textPath;
+    Path path, textPath, arrowPath;
+
     private void initPath() {
         path = new Path();
         path.moveTo(50, 50);
@@ -62,6 +65,13 @@ public class CustomGraphicsView extends View {
 
         textPath = new Path();
         textPath.addCircle(300, 300, 150, Path.Direction.CW);
+
+        arrowPath = new Path();
+        arrowPath.lineTo(-5, -5);
+        arrowPath.lineTo(0, -5);
+        arrowPath.lineTo(5, 0);
+        arrowPath.lineTo(0, 5);
+        arrowPath.lineTo(-5, 5);
     }
 
     float[] points;
@@ -94,9 +104,31 @@ public class CustomGraphicsView extends View {
         //drawPath(canvas);
         //drawText(canvas);
         //drawBitmap(canvas);
-        drawBitmapMesh(canvas);
+        //drawBitmapMesh(canvas);
+        //drawPathEffect(canvas);
+        drawPathDashPathEffect(canvas);
 
         canvas.restore();
+    }
+
+    private void drawPathDashPathEffect(Canvas canvas) {
+        PathDashPathEffect effect = new PathDashPathEffect(arrowPath, 10, 0, PathDashPathEffect.Style.ROTATE);
+        mPaint.setPathEffect(effect);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(10);
+        mPaint.setColor(Color.BLUE);
+
+        canvas.drawCircle(250, 250, 150, mPaint);
+    }
+
+    private void drawPathEffect(Canvas canvas) {
+        float[] intervals = { 20, 10, 15, 5 };
+        DashPathEffect effect = new DashPathEffect(intervals, 20);
+        mPaint.setPathEffect(effect);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(5);
+
+        canvas.drawCircle(250, 250, 150, mPaint);
     }
 
     private void drawBitmapMesh(Canvas canvas) {
