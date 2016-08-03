@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,7 +50,18 @@ public class CustomGraphicsView extends View {
         canvas.save();
         canvas.translate(x, y);
 
-        drawLineAndPoint(canvas);
+        //drawLineAndPoint(canvas);
+        drawRect(canvas);
+    }
+
+    private void drawRect(Canvas canvas) {
+        RectF rect = new RectF(0, 0, 300, 300);
+        mPaint.setColor(Color.BLUE);
+        canvas.drawRect(rect, mPaint);
+
+        RectF rRect = new RectF(0, 400, 300, 700);
+        mPaint.setColor(Color.GREEN);
+        canvas.drawRoundRect(rRect, 30, 50, mPaint);
     }
 
     private void drawLineAndPoint(Canvas canvas) {
