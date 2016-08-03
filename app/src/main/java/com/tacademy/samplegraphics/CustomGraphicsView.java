@@ -51,7 +51,21 @@ public class CustomGraphicsView extends View {
         canvas.translate(x, y);
 
         //drawLineAndPoint(canvas);
-        drawRect(canvas);
+        //drawRect(canvas);
+        drawCircle(canvas);
+    }
+
+    private void drawCircle(Canvas canvas) {
+        mPaint.setColor(Color.YELLOW);
+        canvas.drawCircle(150, 150, 150, mPaint);
+
+        RectF arc = new RectF(400, 0, 700, 300);
+        mPaint.setColor(Color.RED);
+        canvas.drawArc(arc, 45, 90, false, mPaint);
+
+        mPaint.setColor(Color.CYAN);
+        RectF oval = new RectF(0, 400, 600, 700);
+        canvas.drawOval(oval, mPaint);
     }
 
     private void drawRect(Canvas canvas) {
