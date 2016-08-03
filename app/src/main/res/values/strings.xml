@@ -2,4 +2,5 @@
     <string name="app_name">SampleGraphics</string>
     <string name="title_custom_activity">CUSTOM ACTIVITY</string>
     <string name="title_change">CHANGE</string>
+    <string name="title_scroll_activity">SCROLL ACTIVITY</string>
 </resources>

@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CustomActivity"></activity>
+        <activity android:name=".CustomActivity" />
+        <activity android:name=".ScrollImageActivity"></activity>
     </application>
 
 </manifest>
