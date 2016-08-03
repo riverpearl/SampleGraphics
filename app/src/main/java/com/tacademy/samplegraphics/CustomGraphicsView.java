@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -24,6 +25,19 @@ public class CustomGraphicsView extends View {
         super(context, attrs);
         mPaint = new Paint();
         initPoint();
+        initPath();
+    }
+
+    Path path;
+    private void initPath() {
+        path = new Path();
+        path.moveTo(50, 50);
+        path.lineTo(0, 0);
+        path.lineTo(100, 0);
+        path.lineTo(150, 50);
+        path.lineTo(100, 100);
+        path.lineTo(0, 100);
+        path.addCircle(300, 300, 100, Path.Direction.CCW);
     }
 
     float[] points;
@@ -52,7 +66,13 @@ public class CustomGraphicsView extends View {
 
         //drawLineAndPoint(canvas);
         //drawRect(canvas);
-        drawCircle(canvas);
+        //drawCircle(canvas);
+        drawPath(canvas);
+    }
+
+    private void drawPath(Canvas canvas) {
+        mPaint.setColor(Color.YELLOW);
+        canvas.drawPath(path, mPaint);
     }
 
     private void drawCircle(Canvas canvas) {
