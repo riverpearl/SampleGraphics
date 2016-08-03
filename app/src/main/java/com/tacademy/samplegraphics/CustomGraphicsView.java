@@ -28,7 +28,7 @@ public class CustomGraphicsView extends View {
         initPath();
     }
 
-    Path path;
+    Path path, textPath;
     private void initPath() {
         path = new Path();
         path.moveTo(50, 50);
@@ -38,6 +38,9 @@ public class CustomGraphicsView extends View {
         path.lineTo(100, 100);
         path.lineTo(0, 100);
         path.addCircle(300, 300, 100, Path.Direction.CCW);
+
+        textPath = new Path();
+        textPath.addCircle(300, 300, 150, Path.Direction.CW);
     }
 
     float[] points;
@@ -69,14 +72,20 @@ public class CustomGraphicsView extends View {
         //drawCircle(canvas);
         //drawPath(canvas);
         drawText(canvas);
+
+        canvas.restore();
     }
 
     String text = "Hello Android!";
+    float hOffset = 0;
 
     private void drawText(Canvas canvas) {
         mPaint.setColor(Color.BLUE);
         mPaint.setTextSize(30);
-        canvas.drawText(text, 0, 30, mPaint);
+        //canvas.drawText(text, 0, 30, mPaint);
+        canvas.drawTextOnPath(text, textPath, hOffset, 0, mPaint);
+        hOffset += 5;
+        invalidate();
     }
 
     private void drawPath(Canvas canvas) {
