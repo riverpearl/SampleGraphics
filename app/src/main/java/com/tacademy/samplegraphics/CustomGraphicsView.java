@@ -23,6 +23,7 @@ import android.graphics.SweepGradient;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -36,6 +37,8 @@ public class CustomGraphicsView extends View {
     public CustomGraphicsView(Context context) {
         this(context, null);
     }
+
+    GestureDetector mDetector;
 
     public CustomGraphicsView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -53,6 +56,27 @@ public class CustomGraphicsView extends View {
         initPoint();
         initPath();
         initBitmap();
+
+        mDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
+
+            @Override
+            public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                matrix.postTranslate(-distanceX, -distanceY);
+                invalidate();
+                return true;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                matrix.postScale(1.5f, 1.5f);
+                invalidate();
+                return true;
+            }
+        });
     }
 
     public void changeBitmap(Bitmap bitmap) {
@@ -311,15 +335,18 @@ public class CustomGraphicsView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_DOWN :
-                return true;
-            case MotionEvent.ACTION_UP :
-                x = event.getX();
-                y = event.getY();
-                invalidate();
-                return true;
-        }
-        return super.onTouchEvent(event);
+//        switch (event.getActionMasked()) {
+//            case MotionEvent.ACTION_DOWN :
+//                return true;
+//            case MotionEvent.ACTION_UP :
+//                x = event.getX();
+//                y = event.getY();
+//                invalidate();
+//                return true;
+//        }
+//        return super.onTouchEvent(event);
+
+        boolean consumed = mDetector.onTouchEvent(event);
+        return consumed || super.onTouchEvent(event);
     }
 }
