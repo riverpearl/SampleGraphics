@@ -3,4 +3,6 @@
     <string name="title_custom_activity">CUSTOM ACTIVITY</string>
     <string name="title_change">CHANGE</string>
     <string name="title_scroll_activity">SCROLL ACTIVITY</string>
+    <string name="title_paint_activity">PAINT ACTIVITY</string>
+    <string name="title_path_paint_activity">PATH PAINT ACTIVITY</string>
 </resources>

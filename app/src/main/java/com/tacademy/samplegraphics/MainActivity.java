@@ -30,5 +30,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn = (Button)findViewById(R.id.btn_paint_activity);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PaintActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn = (Button)findViewById(R.id.btn_path_paint_activity);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PathPaintActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
