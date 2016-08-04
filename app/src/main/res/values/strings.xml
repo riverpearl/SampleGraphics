@@ -8,4 +8,5 @@
     <string name="title_surface_activity">SURFACE ACTIVITY</string>
     <string name="title_scroll">SCROLL</string>
     <string name="title_scroll_image_activity">SCROLL IMAGE ACTIVITY</string>
+    <string name="title_drag_and_drop_activity">DRAG AND DROP ACTIVITY</string>
 </resources>
