@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn = (Button)findViewById(R.id.btn_scroll_activity);
+        btn = (Button)findViewById(R.id.btn_scroll_image_activity);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SurfaceActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn = (Button)findViewById(R.id.btn_scroll_activity);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ScrollActivity.class);
                 startActivity(intent);
             }
         });

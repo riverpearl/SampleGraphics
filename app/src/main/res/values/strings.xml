@@ -6,4 +6,6 @@
     <string name="title_paint_activity">PAINT ACTIVITY</string>
     <string name="title_path_paint_activity">PATH PAINT ACTIVITY</string>
     <string name="title_surface_activity">SURFACE ACTIVITY</string>
+    <string name="title_scroll">SCROLL</string>
+    <string name="title_scroll_image_activity">SCROLL IMAGE ACTIVITY</string>
 </resources>
